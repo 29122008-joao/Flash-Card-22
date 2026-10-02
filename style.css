@@ -1,38 +1,61 @@
-:root {
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS DE CORES
+   ========================================================================== */
+   :root {
     --marrom: #7e3e1c;
     --fundo: #f5f2f2;
     --destaque: #e8a33d;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ==========================================================================
+   2. RESET DE ESTILOS E CONFIGURAÇÃO GLOBAL
+   ========================================================================== */
+/* Reset de margens e padding + box-sizing para simplificar cálculo de dimensões */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
+/* Estilização base do corpo da página */
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Garante que o footer fique ao final da tela */
     background-color: var(--fundo);
     font-family: "Segoe UI", system-ui, sans-serif;
     color: #2b1a10;
 }
 
+/* ==========================================================================
+   3. CABEÇALHO E RODAPÉ
+   ========================================================================== */
+/* Estilos compartilhados entre header e footer */
 .cabecalho, footer {
     padding: 15px 25px;
     background-color: var(--marrom);
     color: #fff;
 }
 
+/* Alinhamento dos itens do cabeçalho */
 .cabecalho {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Links do cabeçalho */
 .cabecalho-link { color: #fff; text-decoration: none; }
 .cabecalho-link:hover { text-decoration: underline; }
+
+/* Título principal do cabeçalho */
 h1 { font-size: 24px; color: #fff; }
 
+/* ==========================================================================
+   4. CONTEÚDO PRINCIPAL E SEÇÃO INTRODUTÓRIA
+   ========================================================================== */
 main {
-    flex: 1;
+    flex: 1; /* Ocupa o espaço vertical disponível na página */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,58 +67,75 @@ main {
 .intro h2 { font-size: 28px; color: var(--marrom); }
 .contador { font-weight: 600; }
 
+/* ==========================================================================
+   5. CONTAINER DE CARTÕES
+   ========================================================================== */
 .cartoes {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Permite que os cartões dobrem de linha em telas menores */
     justify-content: center;
     gap: 24px;
 }
 
+/* ==========================================================================
+   6. ESTRUTURA DO CARTÃO E EFEITO 3D DE GIRO
+   ========================================================================== */
 .cartao {
     width: 280px;
     height: 380px;
-    perspective: 1000px;
+    perspective: 1000px; /* Cria profundidade para a rotação 3D */
     cursor: pointer;
     border-radius: 16px;
     outline: none;
 }
 
+/* Destaque de acessibilidade para navegação via teclado */
 .cartao:focus-visible { box-shadow: 0 0 0 4px var(--destaque); }
 
+/* Container interno que de fato sofre a rotação */
 .cartao-interno {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
+    transition: transform 0.8s; /* Suavidade do giro */
+    transform-style: preserve-3d; /* Mantém os elementos filhos em um espaço 3D */
 }
 
+/* Vira o cartão ao passar o mouse ou quando a classe .virado é aplicada via JS */
 .cartao:hover .cartao-interno,
-.cartao.virado .cartao-interno { transform: rotateY(180deg); }
+.cartao.virado .cartao-interno { 
+    transform: rotateY(180deg); 
+}
 
-/* Em telas de toque o hover "gruda"; o clique controla o giro */
+/* Impede o hover de travar o giro em dispositivos touchscreen */
 @media (hover: none) {
     .cartao:hover:not(.virado) .cartao-interno { transform: none; }
 }
 
+/* ==========================================================================
+   7. FACES DO CARTÃO (FRENTE E VERSO)
+   ========================================================================== */
 .cartao-frente, .cartao-verso {
     position: absolute;
     inset: 0;
     overflow: hidden;
     border-radius: 16px;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-    backface-visibility: hidden;
+    backface-visibility: hidden; /* Esconde a face traseira quando ela está virada de costas */
     -webkit-backface-visibility: hidden;
 }
 
+/* Prepara a face do verso virada em 180 graus inicialmente */
 .cartao-verso { transform: rotateY(180deg); }
 
+/* Imagem de fundo do cartão */
 .cartao-imagem {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Ajusta a imagem mantendo proporções sem distorcer */
 }
 
+/* Texto sobreposto na imagem com gradiente de fundo para facilitar leitura */
 .cartao p {
     position: absolute;
     left: 0; right: 0; bottom: 0;
@@ -108,6 +148,9 @@ main {
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
 }
 
+/* ==========================================================================
+   8. SELOS (ETIQUETAS DE MITO / VERDADE)
+   ========================================================================== */
 .selo {
     position: absolute;
     top: 12px; left: 12px;
@@ -120,8 +163,22 @@ main {
     text-transform: uppercase;
 }
 
-.selo.verdade { background: #3aa76d; color: #fff; }
+/* Variação visual para resposta VERDADE */
+.selo.verdade { 
+    background: #3aa76d; 
+    color: #fff; 
+}
 
+/* Variação visual para resposta MITO */
+.selo.mito { 
+    background: #d9534f; 
+    color: #fff; 
+}
+
+/* ==========================================================================
+   9. ACESSIBILIDADE - REDUÇÃO DE MOVIMENTO
+   ========================================================================== */
+/* Desativa animações se o usuário preferir menos movimentos na tela */
 @media (prefers-reduced-motion: reduce) {
     .cartao-interno { transition: none; }
 }
