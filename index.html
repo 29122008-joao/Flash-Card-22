@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confere aí | Mito ou verdade: guepardos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <h1>Confere aí</h1>
+        <nav><a href="#" class="cabecalho-link">início</a></nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Mito ou verdade? Guepardos</h2>
+            <p>Passe o mouse, toque ou use Enter em cada cartão para descobrir a verdade.</p>
+            <p class="contador" aria-live="polite">Cartões virados: <span id="virados">0</span> de 4</p>
+        </section>
+
+        <section class="cartoes">
+            <article class="cartao" tabindex="0" role="button" aria-pressed="false">
+                <div class="cartao-interno">
+                    <div class="cartao-frente">
+                        <img src="gue1.webp" alt="Guepardo correndo" class="cartao-imagem">
+                        <span class="selo">Mito?</span>
+                        <p>Guepardos mantêm a velocidade máxima por horas!</p>
+                    </div>
+                    <div class="cartao-verso">
+                        <img src="gue2.jpeg" alt="Guepardo parado em uma colina" class="cartao-imagem">
+                        <span class="selo verdade">Verdade</span>
+                        <p>Chegam a cerca de 100 km/h, mas só por uns 30 segundos.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="cartao" tabindex="0" role="button" aria-pressed="false">
+                <div class="cartao-interno">
+                    <div class="cartao-frente">
+                        <img src="gue3.webp" alt="Guepardo parado em uma colina" class="cartao-imagem">
+                        <span class="selo">Mito?</span>
+                        <p>Guepardos rugem como os leões!</p>
+                    </div>
+                    <div class="cartao-verso">
+                        <img src="gue4.webp" alt="Guepardo correndo" class="cartao-imagem">
+                        <span class="selo verdade">Verdade</span>
+                        <p>Eles não rugem: miam, chilreiam e ronronam.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="cartao" tabindex="0" role="button" aria-pressed="false">
+                <div class="cartao-interno">
+                    <div class="cartao-frente">
+                        <img src="gue5.jpeg" alt="Guepardo correndo" class="cartao-imagem">
+                        <span class="selo">Mito?</span>
+                        <p>Guepardo e leopardo são o mesmo animal!</p>
+                    </div>
+                    <div class="cartao-verso">
+                        <img src="gue6.jpeg" alt="Guepardo parado em uma colina" class="cartao-imagem">
+                        <span class="selo verdade">Verdade</span>
+                        <p>São espécies diferentes. O guepardo tem pintas simples e linhas escuras do olho até a boca.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="cartao" tabindex="0" role="button" aria-pressed="false">
+                <div class="cartao-interno">
+                    <div class="cartao-frente">
+                        <img src="gue7.jpeg" alt="Guepardo parado em uma colina" class="cartao-imagem">
+                        <span class="selo">Mito?</span>
+                        <p>Guepardos escondem as garras como os gatos domésticos!</p>
+                    </div>
+                    <div class="cartao-verso">
+                        <img src="gue8.jpeg" alt="Guepardo correndo" class="cartao-imagem">
+                        <span class="selo verdade">Verdade</span>
+                        <p>As garras são semirretráteis e funcionam como chuteiras, dando tração na corrida.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido por João Fernando</p>
+    </footer>
+
+    <script>
+        const cartoes = document.querySelectorAll('.cartao');
+        const contador = document.getElementById('virados');
+        const jaViradas = new Set();
+
+        function alternar(cartao) {
+            const virado = cartao.classList.toggle('virado');
+            cartao.setAttribute('aria-pressed', virado);
+            if (virado) {
+                jaViradas.add(cartao);
+                contador.textContent = jaViradas.size;
+            }
+        }
+
+        cartoes.forEach(cartao => {
+            cartao.addEventListener('click', () => alternar(cartao));
+            cartao.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    alternar(cartao);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

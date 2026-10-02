@@ -1,0 +1,127 @@
+:root {
+    --marrom: #7e3e1c;
+    --fundo: #f5f2f2;
+    --destaque: #e8a33d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--fundo);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: #2b1a10;
+}
+
+.cabecalho, footer {
+    padding: 15px 25px;
+    background-color: var(--marrom);
+    color: #fff;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cabecalho-link { color: #fff; text-decoration: none; }
+.cabecalho-link:hover { text-decoration: underline; }
+h1 { font-size: 24px; color: #fff; }
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 16px;
+}
+
+.intro { text-align: center; display: grid; gap: 8px; }
+.intro h2 { font-size: 28px; color: var(--marrom); }
+.contador { font-weight: 600; }
+
+.cartoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+}
+
+.cartao {
+    width: 280px;
+    height: 380px;
+    perspective: 1000px;
+    cursor: pointer;
+    border-radius: 16px;
+    outline: none;
+}
+
+.cartao:focus-visible { box-shadow: 0 0 0 4px var(--destaque); }
+
+.cartao-interno {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.cartao:hover .cartao-interno,
+.cartao.virado .cartao-interno { transform: rotateY(180deg); }
+
+/* Em telas de toque o hover "gruda"; o clique controla o giro */
+@media (hover: none) {
+    .cartao:hover:not(.virado) .cartao-interno { transform: none; }
+}
+
+.cartao-frente, .cartao-verso {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.cartao-verso { transform: rotateY(180deg); }
+
+.cartao-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cartao p {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 48px 16px 16px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+}
+
+.selo {
+    position: absolute;
+    top: 12px; left: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--destaque);
+    color: #2b1a10;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.selo.verdade { background: #3aa76d; color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+    .cartao-interno { transition: none; }
+}
